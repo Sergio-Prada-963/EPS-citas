@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Consultar Cita - EPS Citas</title>
+  <meta name="description" content="Consulta el estado de tu cita médica">
+  <meta name="keywords" content="consulta, cita, eps">
+
+  <!-- Favicons -->
+  <link href="{{ url_for('static', filename='assets/img/favicon.png') }}" rel="icon">
+  <link href="{{ url_for('static', filename='assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/aos/aos.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="{{ url_for('static', filename='assets/css/main.css') }}" rel="stylesheet">
+</head>
+
+<body class="appointment-page">
+
+  <header id="header" class="header fixed-top">
+
+    <div class="topbar d-flex align-items-center dark-background">
+      <div class="container d-flex justify-content-center justify-content-md-between">
+        <div class="contact-info d-flex align-items-center">
+          <i class="bi bi-envelope d-flex align-items-center"><a
+              href="mailto:contact@eps.com">contact@eps.com</a></i>
+          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+57 123 456 7890</span></i>
+        </div>
+        <div class="social-links d-none d-md-flex align-items-center">
+          <a href="#!" class="twitter"><i class="bi bi-twitter-x"></i></a>
+          <a href="#!" class="facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#!" class="instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#!" class="linkedin"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+    </div><!-- End Top Bar -->
+
+    <div class="branding d-flex align-items-center">
+
+      <div class="container position-relative d-flex align-items-center justify-content-between">
+        <a href="{{ url_for('index') }}" class="logo d-flex align-items-center">
+          <h1 class="sitename">EPS Citas</h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="{{ url_for('index') }}">Inicio</a></li>
+            <li><a href="{{ url_for('registro_paciente') }}">Registrar Paciente</a></li>
+            <li><a href="{{ url_for('reservar_cita') }}">Reservar Cita</a></li>
+            <li><a href="{{ url_for('consulta_cita') }}" class="active">Consultar Cita</a></li>
+            <li><a href="{{ url_for('login') }}">Iniciar Sesión</a></li>
+            <li><a href="{{ url_for('registro_usuario') }}">Registro</a></li>
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+      </div>
+
+    </div>
+
+  </header>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title dark-background">
+      <div class="container d-lg-flex justify-content-between align-items-center">
+        <div class="page-title-content" data-aos="fade-up" data-aos-delay="100">
+          <h1>Consultar Cita</h1>
+          <p>Verifica el estado y detalles de tu cita médica</p>
+        </div>
+        <nav class="breadcrumbs" data-aos="fade-up" data-aos-delay="200">
+          <ol>
+            <li><a href="{{ url_for('index') }}">Inicio</a></li>
+            <li class="current">Consultar Cita</li>
+          </ol>
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+
+    <!-- Appointment Section -->
+    <section id="appointment" class="appointment section">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4 justify-content-center">
+          <div class="col-lg-8">
+            <div class="appointment-form" data-aos="fade-up" data-aos-delay="200">
+              <form method="get" class="php-email-form">
+                <div class="row gy-4">
+                  <div class="col-12">
+                    <input type="number" name="id" class="form-control" placeholder="ID de la Cita" required>
+                  </div>
+                  <div class="col-12">
+                    <div class="loading">Cargando</div>
+                    <div class="error-message"></div>
+                    <div class="sent-message">Búsqueda completada.</div>
+                    <button type="submit" class="btn btn-primary">Buscar Cita</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            {% if cita %}
+              <div class="appointment-result mt-4" data-aos="fade-up" data-aos-delay="300">
+                <h3>Resultado de la Búsqueda</h3>
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Cita #{{ cita.id }}</h5>
+                    <p class="card-text"><strong>Documento Paciente:</strong> {{ cita.documento }}</p>
+                    <p class="card-text"><strong>Médico:</strong> {{ cita.medico or 'No especificado' }}</p>
+                    <p class="card-text"><strong>Tipo de Cita:</strong> {{ cita.tipo_cita or 'No especificado' }}</p>
+                    <p class="card-text"><strong>Fecha:</strong> {{ cita.fecha.strftime('%d/%m/%Y') if cita.fecha else 'No especificada' }}</p>
+                    <p class="card-text"><strong>Hora:</strong> {{ cita.hora.strftime('%H:%M') if cita.hora else 'No especificada' }}</p>
+                    <p class="card-text"><strong>Dirección EPS:</strong> {{ cita.direccion_eps or 'No especificada' }}</p>
+                  </div>
+                </div>
+              </div>
+            {% elif request.args.get('id') %}
+              <div class="alert alert-warning mt-4" role="alert">
+                No se encontró una cita con el ID proporcionado.
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+      </div>
+
+    </section><!-- /Appointment Section -->
+
+  </main>
+
+  <footer id="footer" class="footer-16 footer position-relative">
+
+    <div class="container">
+
+      <div class="footer-main" data-aos="fade-up" data-aos-delay="100">
+        <div class="row align-items-start">
+
+          <div class="col-lg-5">
+            <div class="brand-section">
+              <a href="{{ url_for('index') }}" class="logo d-flex align-items-center mb-4">
+                <span class="sitename">EPS Citas</span>
+              </a>
+              <p class="brand-description">Sistema de gestión de citas médicas EPS para una atención eficiente y accesible.</p>
+
+              <div class="contact-info mt-5">
+                <div class="contact-item">
+                  <i class="bi bi-geo-alt"></i>
+                  <span>Calle 123, Ciudad, País</span>
+                </div>
+                <div class="contact-item">
+                  <i class="bi bi-telephone"></i>
+                  <span>+57 123 456 7890</span>
+                </div>
+                <div class="contact-item">
+                  <i class="bi bi-envelope"></i>
+                  <span>contact@eps.com</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-7">
+            <div class="footer-nav-wrapper">
+              <div class="row">
+
+                <div class="col-6 col-lg-3">
+                  <div class="nav-column">
+                    <h6>Servicios</h6>
+                    <nav class="footer-nav">
+                      <a href="{{ url_for('registro_paciente') }}">Registrar Paciente</a>
+                      <a href="{{ url_for('reservar_cita') }}">Reservar Cita</a>
+                      <a href="{{ url_for('consulta_cita') }}">Consultar Cita</a>
+                      <a href="#!">Emergencias</a>
+                    </nav>
+                  </div>
+                </div>
+
+                <div class="col-6 col-lg-3">
+                  <div class="nav-column">
+                    <h6>Información</h6>
+                    <nav class="footer-nav">
+                      <a href="#!">Sobre Nosotros</a>
+                      <a href="#!">Especialidades</a>
+                      <a href="#!">Doctores</a>
+                      <a href="#!">Instalaciones</a>
+                    </nav>
+                  </div>
+                </div>
+
+                <div class="col-6 col-lg-3">
+                  <div class="nav-column">
+                    <h6>Recursos</h6>
+                    <nav class="footer-nav">
+                      <a href="#!">Preguntas Frecuentes</a>
+                      <a href="#!">Políticas</a>
+                      <a href="#!">Términos</a>
+                      <a href="#!">Privacidad</a>
+                    </nav>
+                  </div>
+                </div>
+
+                <div class="col-6 col-lg-3">
+                  <div class="nav-column">
+                    <h6>Contacto</h6>
+                    <nav class="footer-nav">
+                      <a href="#!">Soporte</a>
+                      <a href="#!">Horarios</a>
+                      <a href="#!">Ubicación</a>
+                      <a href="#!">Redes Sociales</a>
+                    </nav>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="bottom-content" data-aos="fade-up" data-aos-delay="300">
+          <div class="row align-items-center">
+
+            <div class="col-lg-6">
+              <div class="copyright">
+                <p>© <span class="sitename">EPS Citas</span>. Todos los derechos reservados.</p>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="legal-links">
+                <a href="#!">Política de Privacidad</a>
+                <a href="#!">Términos de Servicio</a>
+                <div class="credits">
+                  Diseñado por <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{{ url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/aos/aos.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/php-email-form/validate.js') }}"></script>
+
+  <!-- Main JS File -->
+  <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+</body>
+
+</html>
